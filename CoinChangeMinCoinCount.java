@@ -25,3 +25,25 @@ class Solution {
         return dp[amount][coins.length] == Integer.MAX_VALUE ? -1 : dp[amount][coins.length];
     }
 }
+
+
+// OPTIMAL approach ->
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount+1];
+        // min no of coins needed to get to amount i
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for(int i=1; i<=amount; i++) {
+            for(var coin: coins) {
+                if(i - coin >= 0 && dp[i-coin] != Integer.MAX_VALUE) {
+                    dp[i] = Integer.min(dp[i], dp[i-coin]+1);
+                }
+            }
+        }
+
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }
+}
